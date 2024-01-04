@@ -1,10 +1,11 @@
 CC=gcc
-CFLAGS=-o
+CFLAGS=-Wall -Wextra -std=c99
+LDFLAGS=
 
-dice: dice.c
-	$(CC) $(CFLAGS) dice dice.c
+roll: main.c dice.c parse.c dice.h parse.h
+	$(CC) $(CFLAGS) $(LDFLAGS) -o roll main.c dice.c parse.c
 
 .PHONY: clean
 
 clean:
-	rm -f *.o $(objects) dice
+	rm -f roll
