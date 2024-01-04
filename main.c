@@ -8,32 +8,24 @@
 
 int main(int argc, char *argv[])
 {
-    if (argc != 2 && argc != 3)
+    if (argc != 2)
     {
-        printf("Usage: %s [numDice] faces\n", argv[0]);
+        fprintf(stderr, "Usage: %s notation\n", argv[0]);
         return 1;
     }
-
-    // Seed random numbers
+    
+    DiceRoll diceRoll = parseNotation(argv[1]);
     srand(time(0));
+    int roll = diceRoll.numDice ? rollDice(*diceRoll.numDice, diceRoll.faces) : rollDie(diceRoll.faces);
 
-    // Check arguments are valid
-    for (int i = 1; i < argc; i++)
+    if (diceRoll.operator && diceRoll.modifier && isValidOperator(*diceRoll.operator))
     {
-        if (!isNumber(argv[i]))
-        {
-            printf("Error: numDice and faces must be integers\n");
-            return 1;
-        }
+        roll = applyModifier(roll, *diceRoll.operator, *diceRoll.modifier);
     }
 
-    // Parse arguments
-    int numDice = (argc == 2) ? 1 : atoi(argv[1]);
-    int faces = (argc == 2) ? atoi(argv[1]) : atoi(argv[2]);
-    
-    // Roll the dice
-    int roll = rollDice(numDice, faces);
-    printf("Rolling %id%i: %i\n", numDice, faces, roll);
-    
+    freeDiceRoll(&diceRoll);
+
+    printf("Roll %s: %i\n", argv[1], roll);
+        
     return 0;
 }
