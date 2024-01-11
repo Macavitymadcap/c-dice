@@ -26,6 +26,11 @@ int isValidOperator(char operator)
     return operator == '+' || operator == '-' || operator == '*' || operator == '/';
 }
 
+int hasModifier(DiceRoll diceRoll)
+{
+    return diceRoll.operator && diceRoll.modifier && isValidOperator(*diceRoll.operator);
+}
+
 int applyModifier(int number, char operator, int modifier)
 {
     switch (operator)
@@ -53,4 +58,47 @@ int applyModifier(int number, char operator, int modifier)
         exit(1);
         break;
     }
+}
+
+int rollDieOrDice(DiceRoll diceRoll)
+{
+    int roll;
+
+    if (diceRoll.numDice) 
+    {
+        roll = rollDice(*diceRoll.numDice, diceRoll.faces);
+    }
+    else
+    {
+       roll = rollDie(diceRoll.faces); 
+    } 
+
+    return roll;
+}
+
+// int* rollAdvantage(DiceRoll diceRoll)
+// {
+//     return [0, 0];
+// }
+
+// int* rollDisadvantage(DiceRoll diceRoll)
+// {
+//     return [0, 0];
+// }
+
+int rollCritical(DiceRoll diceRoll)
+{
+    int result = 0;
+
+    for (int i = 0; i < 2; i++)
+    {
+        result += rollDieOrDice(diceRoll);
+    }
+
+    if (hasModifier(diceRoll))
+    {
+        return applyModifier(result, *diceRoll.operator, *diceRoll.modifier);
+    }
+
+    return result;
 }

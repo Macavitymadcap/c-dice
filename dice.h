@@ -1,6 +1,8 @@
 #ifndef DICE_H
 #define DICE_H
 
+#include "parse.h"
+
 /**
  * @brief Roll a die with a number of faces.
  * 
@@ -19,11 +21,25 @@ int rollDie(int faces);
 int rollDice(int numDice, int faces);
 
 /**
- * @brief Determine whether the character is a a standard arithemtic operator
+ * @brief Call rollDie or rollDice depending on the presence of numDice.
  * 
- * @returns (int) - 0 if a standard operator, else non-zero;
+ * @param diceRoll (DiceRoll) - The parsed dice notation to be rolled.
+ * @returns (int) - the result of the roll. 
+*/
+
+/**
+ * @brief Determine whether the character is a a standard arithemtic operator.
+ * 
+ * @returns (int) - 0 if a standard operator, else non-zero.
 */
 int isValidOperator(char operator);
+
+/**
+ * @brief Determine whether the DiceRoll has a modifier
+ * 
+ * @returns (int) 0 if it has a valid modifier, else non-zero. 
+*/
+int hasModifier(DiceRoll diceRoll);
 
 /**
  * @brief Apply an arithmetic modifier to number.
@@ -35,4 +51,27 @@ int isValidOperator(char operator);
 */
 int applyModifier(int number, char operator, int modifier);
 
+// /**
+//  * @brief Roll twice and return both ordered high to low.
+//  * 
+//  * @param diceRoll (DiceRoll) - Parsed dice notation to be rolled.
+//  * @returns (int*) - The results ordered highest to lowest.
+// */
+// int* rollAdvantage(DiceRoll diceRoll);
+
+// /**
+//  * @brief Roll twice and return both ordered low to high.
+//  * 
+//  * @param diceRoll (DiceRoll) - Parsed dice notation to be rolled.
+//  * @returns (int*) - The results ordered lowest to highest.
+// */
+// int* rollDisadvantage(DiceRoll diceRoll);
+
+/**
+ * @brief Roll the dice twice and then apply modifiers.
+ * 
+ * @param diceRoll (DiceRoll) - Parsed dice notation to be rolled.
+ * @returns (int) - Result of the critical roll.
+*/
+int rollCritical(DiceRoll diceRoll);
 #endif

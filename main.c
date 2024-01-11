@@ -8,6 +8,8 @@
 
 int main(int argc, char *argv[])
 {
+    // advantage critical disadvantage scores
+    // char *options = "acds";
     if (argc != 2)
     {
         fprintf(stderr, "Usage: %s notation\n", argv[0]);

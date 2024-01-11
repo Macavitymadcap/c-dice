@@ -8,7 +8,7 @@
 #include "parse.h"
 
 // String representation of the Regular expression for dice notation
-const char* DICE_NOTATION = "([0-9]*)d([0-9]+)([+-/*]?)([0-9]*)";
+const char* DICE_NOTATION = "([0-9]*)*d*([0-9]+)s*([+-/*]?)*([0-9]*)";
 
 DiceRoll parseNotation(const char *notation)
 {
@@ -30,17 +30,19 @@ DiceRoll parseNotation(const char *notation)
     {
         if (matches[1].rm_so != -1)
         {
+            char *endPointer;
             diceRoll.numDice = (int*)malloc(sizeof(int));
             char numDiceString[10];
             strncpy(numDiceString, &notation[matches[1].rm_so], matches[1].rm_eo - matches[1].rm_so);
-            *(diceRoll).numDice = atoi(numDiceString);
+            *(diceRoll).numDice = strtol(numDiceString, &endPointer, 10);
         }
 
         if (matches[2].rm_so != -1)
-        {
+        {   
+            char *endPointer;
             char facesString[10];
             strncpy(facesString, &notation[matches[2].rm_so], matches[2].rm_eo - matches[2].rm_so);
-            diceRoll.faces = atoi(facesString);
+            diceRoll.faces = strtol(facesString, &endPointer, 10);
         }
 
         if (matches[3].rm_so != -1)
@@ -51,10 +53,11 @@ DiceRoll parseNotation(const char *notation)
 
         if (matches[4].rm_so != -1)
         {
+            char *endPointer;
             diceRoll.modifier = (int*)malloc(sizeof(int));
-            char modifierString[10];
+            char modifierString[10] = "";
             strncpy(modifierString, &notation[matches[4].rm_so], matches[4].rm_eo - matches[4].rm_so);
-            *(diceRoll).modifier = atoi(modifierString);
+            *(diceRoll).modifier = strtol(modifierString, &endPointer, 10);
         }
     }
     else if (reti == REG_NOMATCH)
