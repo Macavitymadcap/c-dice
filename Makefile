@@ -1,11 +1,17 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -Werror -std=c99 -g
+CFLAGS= -Wall -Wextra -Werror -std=c17 -g
 LDFLAGS= -lm
 
-roll: main.c dice.c parse.c dice.h parse.h
-	$(CC) $(CFLAGS)  -o roll main.c dice.c parse.c $(LDFLAGS)
+SRC = src/main.c src/dice.c src/parse.c
+OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
+
+roll: $(OBJ)
+	$(CC) $(CFLAGS) -o roll $(OBJ) $(LDFLAGS)
+
+build/%.o: src/%.c
+	$(CC) $(CFLAGS) -Iinclude -c -o $@ $<
 
 .PHONY: clean
 
 clean:
-	rm -f roll
+	rm -f build/*.o roll
