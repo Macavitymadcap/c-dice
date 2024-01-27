@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS= -Wall -Wextra -Werror -std=c17 -g
-LDFLAGS= -lm
+CFLAGS=-Wall -Wextra -Werror -std=c17 -g
+LDFLAGS=-lm
 
-SRC = src/main.c src/dice.c src/parse.c
-OBJ = $(patsubst src/%.c, build/%.o, $(SRC))
+SRC=src/main.c src/dice.c src/parse.c
+OBJ=$(patsubst src/%.c, build/%.o, $(SRC))
 
 roll: $(OBJ)
 	$(CC) $(CFLAGS) -o roll $(OBJ) $(LDFLAGS)

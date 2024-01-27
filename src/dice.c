@@ -64,7 +64,7 @@ int rollDieOrDice(DiceRoll diceRoll)
 {
     int roll;
 
-    if (diceRoll.numDice) 
+    if (diceRoll.numDice != NULL && *diceRoll.numDice != 0) 
     {
         roll = rollDice(*diceRoll.numDice, diceRoll.faces);
     }

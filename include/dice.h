@@ -51,6 +51,13 @@ int hasModifier(DiceRoll diceRoll);
 */
 int applyModifier(int number, char operator, int modifier);
 
+/**
+ * @brief Roll a die or multiple dice and apply modifier.
+ * @param (DiceRoll) diceRoll The parsed constieunts of a roll.
+ * @returns (int) The result of the roll.
+*/
+int rollDieOrDice(DiceRoll diceRoll);
+
 // /**
 //  * @brief Roll twice and return both ordered high to low.
 //  * 

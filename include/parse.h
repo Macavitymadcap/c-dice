@@ -8,10 +8,10 @@
 */
 typedef struct 
 {
-    int *numDice; /**< Pointer to the number of dice (optional) */
-    int faces; /**< Required: number of faces on die/dice */
-    char *operator; /**< Pointer to the operator (optional) */
-    int *modifier; /**< Pointer to the modifer applied with the operator to the roll (optional) */
+    int *numDice; /** Pointer to the number of dice (optional) */
+    int faces; /** Required: number of faces on die/dice */
+    char *operator; /** Pointer to the operator (optional) */
+    int *modifier; /** Pointer to the modifer applied with the operator to the roll (optional) */
 } DiceRoll;
 
 /**

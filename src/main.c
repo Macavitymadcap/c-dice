@@ -17,10 +17,12 @@ int main(int argc, char *argv[])
     }
     
     DiceRoll diceRoll = parseNotation(argv[1]);
+    
     srand(time(0));
-    int roll = diceRoll.numDice ? rollDice(*diceRoll.numDice, diceRoll.faces) : rollDie(diceRoll.faces);
 
-    if (diceRoll.operator && diceRoll.modifier && isValidOperator(*diceRoll.operator))
+    int roll = rollDieOrDice(diceRoll); 
+
+    if (hasModifier(diceRoll))
     {
         roll = applyModifier(roll, *diceRoll.operator, *diceRoll.modifier);
     }
