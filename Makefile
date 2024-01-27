@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS=-Wall -Wextra -Werror -std=c17 -g
 LDFLAGS=-lm
 
-SRC=src/main.c src/dice.c src/parse.c
+SRC=src/main.c src/dice.c src/parse.c src/printers.c
 OBJ=$(patsubst src/%.c, build/%.o, $(SRC))
 
 roll: $(OBJ)
