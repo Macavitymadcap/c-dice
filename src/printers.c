@@ -24,6 +24,7 @@ void printHelp(const char *programName)
     printf("\t- dY:\tKind of die to roll, Y being the number of faces\n");
     printf("\t- ?:\tOptional operator [+|-|*|/] used to apply a modifier\n");
     printf("\t- Z:\tOptional modifier applied to the roll\n");
+    printf("\nAll integer values must be in range 1-99999999\n");
     printf("\n");
     printf("Examples:\n");
     printf("  %s -a d20-1\n", programName);

@@ -11,6 +11,19 @@ void regexCompilationError(void)
     exit(EXIT_FAILURE);
 }
 
+void integerSizeError(int value)
+{
+    if (value == 0)
+    {
+        fprintf(stderr, "Inavild integer: %i. Minimum value is 1.\n", value);
+    }
+    else
+    {
+        fprintf(stderr, "Invalid integer: %i. Maximum value is 99999999\n", value);
+    }
+    exit(EXIT_FAILURE);
+}
+
 void invalidDiceNotationError(const char *notation)
 {
     fprintf(stderr, "'%s' is not valid dice notation\n", notation);

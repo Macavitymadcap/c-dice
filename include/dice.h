@@ -72,20 +72,6 @@ int rollDice(int numDice, int faces);
 */
 
 /**
- * @brief Determine whether the character is a a standard arithemtic operator.
- * 
- * @returns 1 if a standard operator, else zero.
-*/
-int isValidOperator(char operator);
-
-/**
- * @brief Determine whether the DiceRoll has a modifier
- * 
- * @returns 1 if it has a valid modifier, else zero. 
-*/
-int hasModifier(DiceRoll diceRoll);
-
-/**
  * @brief Apply an arithmetic modifier to number.
  * 
  * @param number The number upon which to apply the operation.

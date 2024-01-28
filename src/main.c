@@ -9,6 +9,7 @@
 #include "dice.h"
 #include "parse.h"
 #include "errors.h"
+#include "validation.h"
 
 int main(int argc, char *argv[])
 {
@@ -84,6 +85,7 @@ int main(int argc, char *argv[])
     }
 
     DiceRoll diceRoll = parseNotation(notation);
+    validateDiceRoll(diceRoll);
 
     if (strcmp(rollType, ADVANTAGE) == 0)
     {

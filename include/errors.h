@@ -13,6 +13,13 @@
 */
 void regexCompilationError(void);
 
+
+/**
+ * @brief Exit program if integer outside bounds is passed
+ * @param value Less than 0 or greater than 99999999.
+*/
+void integerSizeError(int value);
+
 /**
  * @brief Exit program if the dice notation is invalid.
  * @param notation String of the invalid dice notation.

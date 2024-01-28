@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "dice.h"
+#include "validation.h"
 #include "errors.h"
 
 const char *ADVANTAGE = "Advantage";
@@ -29,16 +30,6 @@ int rollDice(int numDice, int faces)
     }
 
     return result;
-}
-
-int isValidOperator(char operator)
-{
-    return operator== '+' || operator== '-' || operator== '*' || operator== '/';
-}
-
-int hasModifier(DiceRoll diceRoll)
-{
-    return *diceRoll.operator && *diceRoll.modifier && isValidOperator(*diceRoll.operator);
 }
 
 int applyModifier(int number, char operator, int modifier)
@@ -72,7 +63,7 @@ int rollDieOrDice(DiceRoll diceRoll)
 {
     int roll;
 
-    if (diceRoll.numDice != NULL && *diceRoll.numDice != 0)
+    if (hasNumDice(diceRoll))
     {
         roll = rollDice(*diceRoll.numDice, diceRoll.faces);
     }
