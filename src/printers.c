@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "parse.h"
-
 void printUsage(const char *programName)
 {
     fprintf(stderr, "Usage: %s [OPTIONS] [NOTATION]\n", programName);
@@ -12,19 +10,20 @@ void printHelp(const char *programName)
 {
     printUsage(programName);
     printf("Roll dice based on the provided options and notation.\n\n");
-    printf("Options:\n");
-    printf("  -a\tRoll at advantage (twice, high to low)\n");
-    printf("  -c\tRoll a critical hit (double the dice)\n");
-    printf("  -d\tRoll at disadvantage (twice, low to high)\n");
-    printf("  -h\tDisplay this help text\n");
-    printf("  -s\tRoll ability scores (6 4d6 - the lowest)\n");
+    printf("OPTIONS:\n");
+    printf("\t-a\tRoll at advantage (twice, high to low)\n");
+    printf("\t-c\tRoll a critical hit (double the dice)\n");
+    printf("\t-d\tRoll at disadvantage (twice, low to high)\n");
+    printf("\t-h\tDisplay this help text\n");
+    printf("\t-s\tRoll ability scores (6 4d6 - the lowest)\n");
+    printf("\nIf no option is provided the NOTATION is rolled normally.\n");
     printf("\n");
     printf("Arguments:\n");
-    printf("  NOTATION  <string> Follows the format 'XdY?Z', where: \n");
-    printf("\t- X:  optional number of dice to be rolled\n");
-    printf("\t- dY: the kind of die to roll, Y being the number of faces\n");
-    printf("\t- ?:  optional operator [+|-|*|/] which applies the modifier to the roll\n");
-    printf("\t- Z:  optional modifier applied to the roll\n");
+    printf("\tNOTATION  <string> Follows the format 'XdY?Z', where: \n");
+    printf("\t- X:\tOptional number of dice to be rolled\n");
+    printf("\t- dY:\tKind of die to roll, Y being the number of faces\n");
+    printf("\t- ?:\tOptional operator [+|-|*|/] used to apply a modifier\n");
+    printf("\t- Z:\tOptional modifier applied to the roll\n");
     printf("\n");
     printf("Examples:\n");
     printf("  %s -a d20-1\n", programName);

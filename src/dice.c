@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include <stdio.h>
 #include <math.h>
 
 #include "dice.h"
+#include "errors.h"
 
 const char *ADVANTAGE = "Advantage";
 const char *CRITICAL = "Critical";
@@ -38,7 +38,7 @@ int isValidOperator(char operator)
 
 int hasModifier(DiceRoll diceRoll)
 {
-    return diceRoll.operator&& diceRoll.modifier && isValidOperator(*diceRoll.operator);
+    return *diceRoll.operator && *diceRoll.modifier && isValidOperator(*diceRoll.operator);
 }
 
 int applyModifier(int number, char operator, int modifier)
@@ -57,16 +57,14 @@ int applyModifier(int number, char operator, int modifier)
     case '/':
         if (modifier == 0)
         {
-            fprintf(stderr, "Error: Division by zero\n");
-            exit(EXIT_FAILURE);
+            zeroDivisionError();
         }
         double result = (double)number / modifier;
         return (int)round(result);
 
     default:
-        fprintf(stderr, "'%c' is not supported as an operator. Use one of +|-|*|/\n", operator);
-        exit(EXIT_FAILURE);
-        break;
+        invalidOperatorError(operator);
+        return 0;
     }
 }
 

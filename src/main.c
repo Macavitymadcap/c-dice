@@ -1,14 +1,14 @@
 #define _GNU_SOURCE
 
-#include <time.h>
+#include <openssl/rand.h>
 #include <stdlib.h>
-#include <stdio.h>
 #include <string.h>
 #include <unistd.h>
 
 #include "printers.h"
 #include "dice.h"
 #include "parse.h"
+#include "errors.h"
 
 int main(int argc, char *argv[])
 {
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
     {
         switch (opt)
         {
-        case 'a': 
+        case 'a':
             strncpy(rollType, ADVANTAGE, strlen(ADVANTAGE));
             break;
 
@@ -43,19 +43,31 @@ int main(int argc, char *argv[])
             break;
 
         case '?':
+            free(rollType);
             printUsage(argv[0]);
             exit(EXIT_FAILURE);
 
         default:
+            free(rollType);
             exit(EXIT_FAILURE);
         }
     }
+    
+    unsigned char seed[8];
+    if (RAND_bytes(seed, sizeof(seed)) != 1)
+    {   
+        free(rollType);
+        randomSeedingError();
+    }
+
+    srand(*((unsigned int *)seed));
 
     if (strcmp(rollType, SCORES) == 0)
     {
         int scores[ABILITY_SCORES];
         rollScores(scores);
-        printRollArray(rollType, NULL, scores, 6);
+        printRollArray(SCORES, NULL, scores, ABILITY_SCORES);
+        free(rollType);
         exit(EXIT_SUCCESS);
     }
 
@@ -72,14 +84,12 @@ int main(int argc, char *argv[])
     }
 
     DiceRoll diceRoll = parseNotation(notation);
-    
-    srand(time(0));
 
     if (strcmp(rollType, ADVANTAGE) == 0)
     {
-        int results[VANTAGE_ROLLS]; 
+        int results[VANTAGE_ROLLS];
         rollAdvantage(diceRoll, results);
-        printRollArray(ADVANTAGE, notation, results, 2);
+        printRollArray(ADVANTAGE, notation, results, VANTAGE_ROLLS);
     }
     else if (strcmp(rollType, CRITICAL) == 0)
     {
@@ -90,7 +100,7 @@ int main(int argc, char *argv[])
     {
         int results[VANTAGE_ROLLS];
         rollDisadvantage(diceRoll, results);
-        printRollArray(DISADVANTAGE, notation, results, 2);
+        printRollArray(DISADVANTAGE, notation, results, VANTAGE_ROLLS);
     }
     else
     {
@@ -100,6 +110,6 @@ int main(int argc, char *argv[])
 
     freeDiceRoll(&diceRoll);
     free(rollType);
-        
+
     exit(EXIT_SUCCESS);
 }
