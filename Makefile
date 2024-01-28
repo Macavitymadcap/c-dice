@@ -3,7 +3,7 @@ CFLAGS=-Wall -Wextra -Werror -std=c17 -g
 LDFLAGS=-lm -lssl -lcrypto
 INCLUDE=-Iinclude
 
-SRC=src/main.c src/dice.c src/parse.c src/printers.c src/errors.c src/validation.c
+SRC=$(wildcard src/*.c)
 OBJ=$(patsubst src/%.c, build/%.o, $(SRC))
 
 roll: $(OBJ)
