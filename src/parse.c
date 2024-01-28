@@ -21,7 +21,7 @@ DiceRoll parseNotation(const char *notation)
     if (reti)
     {
         fprintf(stderr, "Could not compile regex\n");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     reti = regexec(&regex, notation, 5, matches, 0);
@@ -31,7 +31,7 @@ DiceRoll parseNotation(const char *notation)
         {
             char *endPointer;
             diceRoll.numDice = (int*)malloc(sizeof(int));
-            char numDiceString[10];
+            char numDiceString[10] = "";
             strncpy(numDiceString, &notation[matches[1].rm_so], matches[1].rm_eo - matches[1].rm_so);
             *(diceRoll).numDice = strtol(numDiceString, &endPointer, 10);
         }
@@ -39,7 +39,7 @@ DiceRoll parseNotation(const char *notation)
         if (matches[2].rm_so != -1)
         {   
             char *endPointer;
-            char facesString[10];
+            char facesString[10] = "";
             strncpy(facesString, &notation[matches[2].rm_so], matches[2].rm_eo - matches[2].rm_so);
             diceRoll.faces = strtol(facesString, &endPointer, 10);
         }
@@ -62,14 +62,14 @@ DiceRoll parseNotation(const char *notation)
     else if (reti == REG_NOMATCH)
     {
         fprintf(stderr, "'%s' is not valid dice notation\n", notation);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
     else
     {
         char errorBuffer[100];
         regerror(reti, &regex, errorBuffer, sizeof(errorBuffer));
         fprintf(stderr, "Regex match failed: %s\n", errorBuffer);
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     regfree(&regex);

@@ -21,7 +21,7 @@ void printHelp(const char *programName)
     printf("\n");
     printf("Arguments:\n");
     printf("  NOTATION  <string> Follows the format 'XdY?Z', where: \n");
-    printf("\t- X:  the number of dice to be rolled\n");
+    printf("\t- X:  optional number of dice to be rolled\n");
     printf("\t- dY: the kind of die to roll, Y being the number of faces\n");
     printf("\t- ?:  optional operator [+|-|*|/] which applies the modifier to the roll\n");
     printf("\t- Z:  optional modifier applied to the roll\n");

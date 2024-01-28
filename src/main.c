@@ -12,7 +12,6 @@
 
 int main(int argc, char *argv[])
 {
-    // advantage critical disadvantage help scores
     char *options = "acdhs";
     int opt;
 

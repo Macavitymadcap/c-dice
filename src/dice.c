@@ -7,7 +7,7 @@
 const char *ADVANTAGE = "Advantage";
 const char *CRITICAL = "Critical";
 const char *DISADVANTAGE = "Disadvantage";
-const char *SCORES = "Scores";
+const char *SCORES = "Ability Scores";
 const char *STANDARD = "Standard";
 
 int const ABILITY_SCORE_DICE = 4;

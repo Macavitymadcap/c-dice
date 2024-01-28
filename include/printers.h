@@ -23,7 +23,7 @@ void printHelp(const char* programName);
 
 /**
  * @brief Print an array of rolls.
- * @param rollType String of the roll's type (Advantage, disavantage or Scores).
+ * @param rollType String of the roll's type (Advantage, Disavantage or Scores).
  * @param notation The dice notation rolled (set to NULL for Scores).
  * @param results The array of rolls to be printed.
  * @param size The length of the results array.
