@@ -1,6 +1,5 @@
 #define _GNU_SOURCE
 
-#include <openssl/rand.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
@@ -55,12 +54,6 @@ int main(int argc, char *argv[])
     }
     
     unsigned char seed[8];
-    if (RAND_bytes(seed, sizeof(seed)) != 1)
-    {   
-        free(rollType);
-        randomSeedingError();
-    }
-
     srand(*((unsigned int *)seed));
 
     if (strcmp(rollType, SCORES) == 0)

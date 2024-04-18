@@ -1,18 +1,23 @@
 CC=gcc
 CFLAGS=-Wall -Wextra -Werror -std=c17 -g
-LDFLAGS=-lm -lssl -lcrypto
+LDFLAGS=-lm
 INCLUDE=-Iinclude
 
+BUILD=build
+ROLL=roll
+
 SRC=$(wildcard src/*.c)
-OBJ=$(patsubst src/%.c, build/%.o, $(SRC))
+OBJ=$(patsubst src/%.c, $(BUILD)/%.o, $(SRC))
 
-roll: $(OBJ)
-	$(CC) $(CFLAGS) -o roll $(OBJ) $(LDFLAGS)
+$(shell mkdir -p $(BUILD))
 
-build/%.o: src/%.c
+$(ROLL): $(OBJ)
+	$(CC) $(CFLAGS) -o $(ROLL) $(OBJ) $(LDFLAGS)
+
+$(BUILD)/%.o: src/%.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 .PHONY: clean
 
 clean:
-	rm -f build/*.o roll 
+	rm -f $(BUILD)/*.o $(ROLL) 
