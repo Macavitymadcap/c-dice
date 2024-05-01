@@ -45,11 +45,6 @@ void zeroDivisionError(void);
 void invalidOperatorError(const char operator);
 
 /**
- * Exit program if random numbers have failed to seed.
-*/
-void randomSeedingError(void);
-
-/**
  * @brief Exit program if invaild options and/or arguments are provided
  * @param programName The name of the program.
 */

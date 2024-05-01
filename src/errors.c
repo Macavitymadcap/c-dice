@@ -50,12 +50,6 @@ void invalidOperatorError(const char operator)
     exit(EXIT_FAILURE);
 }
 
-void randomSeedingError(void)
-{
-    fprintf(stderr, "Unable to seed random numbers\n");
-    exit(EXIT_FAILURE);
-}
-
 void usageError(const char *programName)
 {
     printUsage(programName);

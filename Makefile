@@ -1,7 +1,8 @@
 CC=gcc
-CFLAGS=-Wall -Wextra -Werror -std=c17 -g
+CFLAGS=-Wall -Wextra -Werror -Wpedantic -std=c17 -g
 LDFLAGS=-lm
 INCLUDE=-Iinclude
+BUILD=build
 
 BUILD=build
 ROLL=roll
@@ -10,6 +11,9 @@ SRC=$(wildcard src/*.c)
 OBJ=$(patsubst src/%.c, $(BUILD)/%.o, $(SRC))
 
 $(shell mkdir -p $(BUILD))
+
+$(ROLL): $(OBJ)
+	$(CC) $(CFLAGS) -o roll $(OBJ) $(LDFLAGS)
 
 $(ROLL): $(OBJ)
 	$(CC) $(CFLAGS) -o $(ROLL) $(OBJ) $(LDFLAGS)

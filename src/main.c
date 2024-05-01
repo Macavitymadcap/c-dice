@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
+#include <unistd.h>
+#include <sys/time.h>
 
 #include "printers.h"
 #include "dice.h"
@@ -53,9 +56,13 @@ int main(int argc, char *argv[])
         }
     }
     
-    unsigned char seed[8];
-    srand(*((unsigned int *)seed));
-
+    struct timeval tv;
+    gettimeofday(&tv, NULL);
+    unsigned int seed = tv.tv_sec * 1000000 + tv.tv_usec;
+    seed ^= getpid();
+    seed ^= clock();
+    srand(seed);
+    
     if (strcmp(rollType, SCORES) == 0)
     {
         int scores[ABILITY_SCORES];
