@@ -13,13 +13,50 @@
 #include "errors.h"
 #include "validation.h"
 
+void assignChosenRollType(int argc, char *argv[], char *rollType);
+void seedRandomNumbers(void);
+void rollAbilityScores(char * rollType);
+void rollNotation(char * rollType, char * notation, DiceRoll diceRoll);
+
 int main(int argc, char *argv[])
 {
-    char *options = "acdhs";
-    int opt;
-
     char *rollType = malloc(15 * sizeof(char));
     strncpy(rollType, STANDARD, strlen(STANDARD));
+
+    assignChosenRollType(argc, argv, rollType);
+    
+    seedRandomNumbers();
+    
+    if (strcmp(rollType, SCORES) == 0)
+    {
+        rollAbilityScores(rollType);
+    }
+
+    char *notation = NULL;
+
+    if (optind < argc)
+    {
+        notation = argv[optind];
+    }
+    else
+    {
+        printUsage(argv[0]);
+        exit(EXIT_FAILURE);
+    }
+
+    DiceRoll diceRoll = parseNotation(notation);
+    validateDiceRoll(diceRoll);
+    rollNotation(rollType, notation, diceRoll);
+
+    freeDiceRoll(&diceRoll);
+    free(rollType);
+
+    exit(EXIT_SUCCESS);
+}
+
+void assignChosenRollType(int argc, char *argv[], char *rollType){
+    char *options = "acdhs";
+    int opt;
 
     while ((opt = getopt(argc, argv, options)) != -1)
     {
@@ -55,38 +92,26 @@ int main(int argc, char *argv[])
             exit(EXIT_FAILURE);
         }
     }
-    
+}
+
+void seedRandomNumbers(void){
     struct timeval tv;
     gettimeofday(&tv, NULL);
     unsigned int seed = tv.tv_sec * 1000000 + tv.tv_usec;
     seed ^= getpid();
     seed ^= clock();
     srand(seed);
-    
-    if (strcmp(rollType, SCORES) == 0)
-    {
-        int scores[ABILITY_SCORES];
-        rollScores(scores);
-        printRollArray(SCORES, NULL, scores, ABILITY_SCORES);
-        free(rollType);
-        exit(EXIT_SUCCESS);
-    }
+}
 
-    char *notation = NULL;
+void rollAbilityScores(char * rollType){
+    int scores[ABILITY_SCORES];
+    rollScores(scores);
+    printRollArray(SCORES, NULL, scores, ABILITY_SCORES);
+    free(rollType);
+    exit(EXIT_SUCCESS);
+}
 
-    if (optind < argc)
-    {
-        notation = argv[optind];
-    }
-    else
-    {
-        printUsage(argv[0]);
-        exit(EXIT_FAILURE);
-    }
-
-    DiceRoll diceRoll = parseNotation(notation);
-    validateDiceRoll(diceRoll);
-
+void rollNotation(char * rollType, char * notation, DiceRoll diceRoll){
     if (strcmp(rollType, ADVANTAGE) == 0)
     {
         int results[VANTAGE_ROLLS];
@@ -109,9 +134,4 @@ int main(int argc, char *argv[])
         int result = rollStandard(diceRoll);
         printRoll(notation, STANDARD, result);
     }
-
-    freeDiceRoll(&diceRoll);
-    free(rollType);
-
-    exit(EXIT_SUCCESS);
 }
